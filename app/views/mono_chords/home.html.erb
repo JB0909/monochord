@@ -1,0 +1,32 @@
+
+<div class="center jumbotron">
+    <h1>MONOCHORD</h1>
+    <p>楽器の練習量を記録・管理</p>
+</div>
+
+<h1 class="users-heading">ユーザー一覧</h1>
+
+<% @users.each do |user| %>
+    <div class="users-index-item">
+        <div class="user-right">
+        
+            <!-- 下記のコードでユーザーを表示させています。 -->
+            
+            <%= link_to(user.username, "/users/#{user.id}") %>
+        </div>
+    </div>
+<% end %>
+
+
+
+
+
+
+<%# フォロー全員の投稿を表示 %>
+<% if user_signed_in? %>
+    <div class="col-md-8">
+        <h3>Micropost Feed</h3>
+        <%= render 'layouts/feed' %>
+    </div>
+<% end %>
+

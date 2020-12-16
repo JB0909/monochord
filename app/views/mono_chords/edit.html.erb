@@ -1,0 +1,20 @@
+<%# ユーザー画像変更用 %>
+<%= form_for @user,:url => {controller: "mono_chords", action: "update"} do |f| %>
+    <% if @user.image? %>
+        <%= image_tag @user.image.url %>
+    <% else %>
+        <%= image_tag "/assets/default.jpg", :size => '100x100' %>
+    <% end %>
+    <button type="button" class="btn btn-outline-secondary rounded-pill">
+        <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png' %>
+    </button>
+
+    <div class='form-group'>
+    <%= f.label :introduction, '自己紹介'%>
+    <%= f.text_field :introduction %>
+    </div>
+
+
+    <%= f.submit '更新する', class: 'btn btn-primary' %>
+<% end %>
+

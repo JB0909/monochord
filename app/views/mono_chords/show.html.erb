@@ -1,0 +1,107 @@
+<%# プロフィール画像 %>
+<div class="show_container">
+    <div class="profile_container">
+        <div class="image_container">
+            <% if @user.image? %>
+                    <%= image_tag @user.image.url %>
+                <% else %>
+                    <%= image_tag "/assets/default.jpg", :size => '100x100' %>
+            <% end %>
+        </div>
+
+        <h1 class="name"><%= @user.username %></h1>
+
+        <%# フォローボタン %>
+        <%= render 'layouts/follow_form' if user_signed_in? %>
+        <%# フォロー・フォロワー %>
+        <section class="stats">
+                <%= render 'shared/stats' %>
+        </section>
+
+        <div class="introduction_container">
+            <%= @user.introduction %>
+        </div>
+        
+    </div>
+
+<%# modal %>
+<% if @user.id == current_user.id%>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+新規投稿
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">新規投稿</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>          
+            <%= form_for(@micropost, remote:true ) do |f| %>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <%= f.text_area :content, class: 'form-control', rows: 5 %>
+                        <%= f.text_area :practice_time, class: 'form-control', rows: 5 %>
+                        <%= f.select :practice_content, [["ソング","ソング"], ["リズム","リズム"], ["テクニック","テクニック"], ["インプロビゼーション","インプロビゼーション"],["アレンジ","アレンジ"],["サウンド","サウンド"],
+                                            ["音楽理論","音楽理論"]], include_blank: "選択してください"%>
+                        <%= f.select :practice_category, [["ポップス","ポップス"], ["ロック","ロック"], ["ブルース","ブルース"], ["メタル","メタル"],["ジャズ","ジャズ"],["R&B","R&B"],
+                                            ["ラテン","ラテン"]], include_blank: "選択してください"%>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                    <%= f.submit '投稿', class: 'btn btn-primary btn-block' %>
+                </div>
+            <% end %>           
+        </div>
+    </div>
+</div>
+<% end %>
+
+
+    <%= pie_chart @chart %>
+
+    <ul>
+        <li><%= link_to "練習した曲",   practiced_path %></li>
+        <li><%= link_to "練習中の曲", practicing_path %></li>
+        <li><%= link_to "練習したい曲", wish_path %></li>
+    </ul>
+
+    <dl>
+        <dt>登録日</dt>
+        <dd><%= l @user.created_at, format: :short %></dd>
+        <dt>総練習時間</dt>
+        <dd><%= @time_sum %>時間</dd>
+        <dt>平均練習時間/1日</dt>
+        <dd>時間</dd>
+    </dt>
+
+
+
+
+
+
+    <%# マイクロポスト用 %>
+    <P>投稿内容</p>
+    <% @user.microposts.each do |micropost| %>
+        <div class="post_container">
+            <div>
+                <%= link_to micropost.user.username, show_path(micropost.user) %> <span class="text-muted">posted at <%= micropost.created_at %></span>
+            </div>
+            <div>
+                <p><%= micropost.content %></p>
+            </div>
+            <div>
+                <p><%= micropost.practice_time %></p>
+            </div>
+            <span class="timestamp">
+                <%= time_ago_in_words(micropost.created_at) %> 前の投稿
+            </span>
+        </div>
+    <% end %>
+
+</div>
+
+

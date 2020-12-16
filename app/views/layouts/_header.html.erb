@@ -1,0 +1,34 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+        <%= link_to "monochord", root_path, id: "logo" %>
+        <nav>
+            <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+            <li><%= link_to "#{current_user.username}さんのマイページ", show_path(current_user.id), id: "nav" %></li>
+            <li><%= link_to "トップ",   root_path, id: "nav" %></li>
+            <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, id: "nav" %></li>
+            <li><%= link_to "ヘルプ",   help_path, id: "nav" %></li>
+            <li><%= link_to "ユーザー編集",   edit_path(current_user.id), id: "nav" %></li>
+            <% else %>
+            <li><%= link_to 'ユーザー登録', new_user_registration_path, id: "nav"%></li>
+            <li><%= link_to 'ログイン', new_user_session_path, id: "nav" %></li>
+            <li><%= link_to "ヘルプ",   help_path, id: "nav" %></li>
+            <% end %>
+            </ul>
+        </nav>
+
+        <!--devise用
+            <nav>
+                <% if user_signed_in? %>
+                <strong><%= link_to current_user.username, "#" %></strong>
+                <%= link_to 'プロフィール変更', edit_user_registration_path %>
+                <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+            <% else %>
+                <%= link_to 'サインアップ', new_user_registration_path %>
+                <%= link_to 'ログイン', new_user_session_path %>
+                <% end %>
+            </nav>
+            -->
+
+    </div>
+</header>

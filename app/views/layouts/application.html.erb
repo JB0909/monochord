@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render 'layouts/rails_default' %>
+    <%= render 'layouts/shim' %>
+    <%= render 'layouts/theme_header' %>
+
+    
+  </head>
+
+  <body>
+    <%= render 'layouts/navbar' %>
+
+    <!-- devise用-->
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <div>
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <%= render 'layouts/theme_footer' %>
+    </div>
+  </body>
+</html>

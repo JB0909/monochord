@@ -1,0 +1,16 @@
+<div>
+    <%= link_to micropost.user.username, show_path(micropost.user) %> <span class="text-muted">posted at <%= micropost.created_at %></span>
+</div>
+<div>
+    <p><%= micropost.content %></p>
+</div>
+<div>
+    <p><%= micropost.practice_time %>時間</p>
+</div>
+<div>
+    <p>練習内容：<%= micropost.practice_content %></p>
+    <p>練習ジャンル：<%= micropost.practice_category %></p>
+</div>
+<span class="timestamp">
+    <%= time_ago_in_words(micropost.created_at) %> 前の投稿
+</span>

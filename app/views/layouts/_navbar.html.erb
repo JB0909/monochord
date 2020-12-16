@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+    <ul>
+        <li><%= link_to "トップ",   root_path %></li>  
+        <li><%= link_to "#{current_user.username}さんのマイページ", show_path(current_user.id) %></li>
+        <li><%= link_to "ユーザー編集",   edit_path(current_user.id) %></a></li>
+        <li><%= link_to "ヘルプ",   help_path %></li>
+        <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></a></li>
+    </ul>
+<% else %>
+    <li><%= link_to 'ログイン', new_user_session_path %></li>
+<% end %>
